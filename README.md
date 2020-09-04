@@ -34,12 +34,11 @@ but I have given the user access to update the older review to a new one. In rea
 
 ## Requirements done:
 
- - R1, R2, R3 almost done (didnt get the sorting by rating or time to work on the frontend), I began with R4. I hope 
- I can reach grade C it is stated that "not Sufficient to get this X grade", so I hope I reach the C grade.
-
+ - R1, R2, R3 almost done (didnt get the sorting by rating or time to work on the frontend), I began with R4, but didnt have enough time to complete it.
+ 
 ## Extras
 
- - Tests run with travis (picture in the folder).
+ - Tests run with travis.
  - Admin can add/create movies.
  - User can update review, but still keep the one review per movie constraint.
 
