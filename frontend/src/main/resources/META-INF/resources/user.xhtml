@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:sec="http://www.springframework.org/security/tags"
+      xmlns:f="http://java.sun.com/jsf/core"
+>
+
+<ui:composition template="/layout.xhtml">
+
+    <ui:define name="title">
+        User Details
+    </ui:define>
+
+    <ui:define name="content">
+        <sec:authenticated>
+            <h:form prependId="false">
+                <h3><h:outputLabel value="Name: #{userInfoController.currentUserFullName}"/></h3>
+                <br/>
+                <h:outputLabel value="Email: #{userInfoController.user.email}" />
+                <br/>
+                <h:outputLabel value="Roles: #{userInfoController.user.roles}" />
+                <br/>
+
+                <h4><h:outputLabel value="Your Ratings: "/></h4>
+                <dl>
+                    <ui:repeat value="#{userInfoController.userReviews}" var="review">
+                        <dt>
+                            <h:outputLabel value="#{review.movie.title}: #{review.star}/5"/>
+                        </dt>
+                        <dd>
+                            <h:outputLabel value="review: #{review.userReview}"/>
+                        </dd>
+                    </ui:repeat>
+                </dl>
+            </h:form>
+        </sec:authenticated>
+
+        <h3><h:outputLabel prependId="false" rendered="#{userInfoController.userReviews.size() eq  0}" value="You have no reviews"/></h3>
+    </ui:define>
+
+</ui:composition>
+</html>

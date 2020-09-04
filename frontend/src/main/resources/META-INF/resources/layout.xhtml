@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html   xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:sec="http://www.springframework.org/security/tags"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+>
+
+<h:head>
+    <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+
+    <link rel="stylesheet" href="/assets/style.css"/>
+
+
+    <title>
+        <ui:insert name="title">Default title</ui:insert>
+    </title>
+
+    <ui:insert name="headTags"/>
+</h:head>
+
+<!-- NOTE this file is taken from and modified -->
+<!-- https://github.com/arcuri82/testing_security_development_enterprise_systems/blob/master/intro/exercise-solutions/quiz-game/part-11/frontend/src/main/resources/META-INF/resources/layout.xhtml -->
+
+<h:body>
+
+    <h1>
+        <ui:insert name="title">Default title</ui:insert>
+    </h1>
+
+    <a id="linkToHomeId" href="/index.jsf" class="defaultBtn">Home</a>
+
+    <sec:authenticated>
+        <div class="btnContainer">
+            <a id="userpageId" href="/user.jsf" class="defaultBtn menuBtn">#{userInfoController.currentUserFullName}</a>
+            <sec:authorize access="hasRole('ADMIN')">
+                <a id="createUsersId" href="/admin/users.jsf" class="defaultBtn menuBtn">Users</a>
+                <a id="createMovieId" href="/admin/admin.jsf" class="defaultBtn menuBtn">Create Movie</a>
+            </sec:authorize>
+            <a id="logoutId" href="/logout" class="defaultBtn menuBtn">Log Out</a>
+        </div>
+    </sec:authenticated>
+
+
+    <sec:anonymous>
+        <p>You are not logged in</p>
+        <a id="linkToLoginId" href="login.jsf" class="defaultBtn">Log In</a>
+        <a id="linkToSignupId" href="signup.jsf" class="defaultBtn">Sign Up</a>
+    </sec:anonymous>
+
+    <hr/>
+
+
+    <div class="content-container">
+        <ui:insert name="content">Default content</ui:insert>
+    </div>
+
+    <hr/>
+
+
+
+</h:body>
+</html>

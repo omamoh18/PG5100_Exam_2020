@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:sec="http://www.springframework.org/security/tags"
+      xmlns:f="http://java.sun.com/jsf/core"
+>
+
+<ui:composition template="/layout.xhtml">
+
+    <ui:define name="title">
+        Create Movie
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form prependId="false">
+            <h3>Create Movie</h3>
+            <h3><h:outputLabel class="errorText"
+                               value="Fields can not be empty!"
+                               rendered="${!empty param['error']}"/></h3>
+
+            <h3><h:outputLabel class="successText"
+                               value="Movie created!"
+                               rendered="${!empty param['success']}"/></h3>
+
+            <table>
+                <tr>
+                    <td><h:outputText value="Title: "/></td>
+                    <td><h:inputText id="addTitle" value="#{adminController.title}" class="createMovie"/></td>
+                </tr>
+                <tr>
+                    <td><h:outputText value="Director: "/></td>
+                    <td><h:inputText id="addDirector" value="#{adminController.director}" class="createMovie"/></td>
+                </tr>
+                <tr>
+                    <td><h:outputText value="Year of Release: "/></td>
+                    <td><h:inputText id="addYearOfRelease" value="#{adminController.yearOfRelease}" class="createMovie"/></td>
+                </tr>
+            </table>
+            <h:commandButton
+                    value="Create movie"
+                    id="addBtn"
+                    class="defaultBtn"
+                    action="#{adminController.createMovie}">
+            </h:commandButton>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+</html>

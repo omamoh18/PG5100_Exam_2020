@@ -1,0 +1,68 @@
+body {
+    background-color: #D5D5D5;
+    width:100%;
+}
+
+
+.tableMovie {
+    background-color: #5c4e4e;
+}
+
+
+.defaultBtn {
+    width: 100px;
+    height:30px;
+    display: block;
+    border-radius: 2.5%;
+    border: 1px solid #1d5ee3;
+    background-color: #3bb150;
+    color: #000;
+    margin:20px;
+    text-align: center;
+    text-decoration:none;
+}
+
+.menuBtn {
+    float: left;
+    margin: 5px;
+}
+
+.detailBtn {
+    width: 100px;
+    height:30px;
+    border-radius: 5%;
+    border: 2px solid #000;
+    background-color: #3bb150;
+    text-align: center;
+    text-decoration:none;
+    color: #000;
+    cursor: pointer;
+}
+
+.indexCheckbox{
+    background-color: #FFF;
+}
+
+.indexCheckbox:checked {
+    background-color: #3bb150;
+}
+.btnContainer{
+    width: 700px;
+    height:50px;
+}
+
+.content-container {
+    width: 100%;
+}
+
+.successText{
+    color: blue;
+}
+
+.errorText{
+    color: red;
+}
+
+#adminNotifyText{
+    color: red;
+}

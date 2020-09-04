@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:sec="http://www.springframework.org/security/tags"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core"
+>
+
+<ui:composition template="/layout.xhtml">
+
+    <ui:define name="title">
+        Home
+    </ui:define>
+
+    <!-- NOTE this is taken from repo from classes and modified -->
+    <!-- https://github.com/arcuri82/testing_security_development_enterprise_systems/blob/master/intro/exercise-solutions/quiz-game/part-11/frontend/src/main/resources/META-INF/resources/index.xhtml -->
+
+    <ui:define name="content">
+
+        <sec:authenticated>
+            <h:outputText value="Welcome  #{userInfoController.currentUserFullName}!"/>
+            <!-- https://docs.spring.io/spring-security/site/docs/3.0.x/reference/el-access.html-->
+            <sec:authorize access="hasRole('ADMIN')">
+                <h:outputText id="adminNotifyText" value="You are logged in as an administrator"/>
+            </sec:authorize>
+        </sec:authenticated>
+
+        <br/><br/>
+        <h:form prependId="false">
+
+            <br/>
+            <h:dataTable value="#{movieController.allMoviesSortedByRating}" var="movie" border="1" id="moviesTable"
+                         class="tableMovie">
+                <h:column>
+                    <f:facet name="header">Title</f:facet>
+                    <h:outputLabel value="#{movie.title}"
+                                   class="movieTitle"
+                                   id="title"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Director</f:facet>
+                    <h:outputLabel value="#{movie.director}"
+                                   class="movieDescription"
+                                   id="description"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Year of Release</f:facet>
+                    <h:outputLabel value="#{movie.yearOfRelease}"
+                                   class="itemCategory"
+                                   id="category"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Rating</f:facet>
+                    <h:outputLabel value="#{mainController.getRatingByAverage(movie.id)}/5"
+                                   rendered="#{mainController.getRatingByAverage(movie.id)>0.01}"
+                                   class="movieRating"
+                                   id="rating"/>
+                    <h:outputLabel value="No rating"
+                                   rendered="#{mainController.getRatingByAverage(movie.id)==0}"
+                                   class="movieEmptyRating"
+                                   id="ratingEmpty"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Details</f:facet>
+                    <h:commandButton id="detailBtn"
+                                     value="Details"
+                                     class="detailBtn"
+                                     action="#{mainController.toMovieDetailPage(movie)}"/>
+                </h:column>
+            </h:dataTable>
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>
+</html>

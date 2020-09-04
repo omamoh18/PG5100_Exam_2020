@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:sec="http://www.springframework.org/security/tags"
+      xmlns:f="http://java.sun.com/jsf/core"
+>
+
+<ui:composition template="/layout.xhtml">
+
+    <ui:define name="title">
+        Details
+    </ui:define>
+
+    <ui:define name="content">
+
+        <br/><br/>
+
+        <h:form prependId="false">
+
+            <br/>
+
+            <h3><h:outputLabel value="Title: #{mainController.movie.title}"/></h3>
+            <h:outputLabel value="Director: #{mainController.movie.director}" />
+            <br/><br/>
+            <h:outputLabel value="Year Of Release: #{mainController.movie.yearOfRelease}" />
+            <br/>
+            <h:outputLabel value="Star: #{mainController.ratingByAverage}/5 by #{mainController.movie.reviewList.size()} user(s)"/>
+            <br/>
+            <h4><h:outputLabel value="Ratings: "/></h4>
+            <dl>
+                <ui:repeat id="reviewList" value="#{mainController.movie.reviewList}" var="review">
+                    <dt>
+                        <h:outputLabel value="#{review.user.name}: #{review.star}/5"/>
+                    </dt>
+                    <dd>
+                        <h:outputLabel value="User review: #{review.userReview}"/>
+                    </dd>
+                    <dd>
+                        <h:outputLabel value="Time of creation: #{review.localDate}"/>
+                    </dd>
+                </ui:repeat>
+            </dl>
+
+            <h3><h:outputLabel class="errorText"
+                               value="Fields can not be empty! and star cannot be 0"
+                               rendered="${!empty param['error']}"/></h3>
+
+            <h3><h:outputLabel class="successText"
+                               value="Rating created/updated!"
+                               rendered="${!empty param['success']}"/></h3>
+            <sec:authenticated>
+                <br/>
+                <h3>Create/update rating</h3>
+                <table>
+                    <tr>
+                        <td>
+                            <h:outputText value="User review: "/>
+                        </td>
+                        <td>
+                            <h:inputText id="addReview" value="#{reviewController.userReview}" class="reviewTable"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h:outputText value="Stars: "/>
+                        </td>
+                        <td>
+                            <h:inputText id="addStar" value="#{reviewController.star}" class="reviewTable"/>
+                        </td>
+                    </tr>
+                </table>
+                <h:commandButton value="update"
+                                 id="updateBtnId"
+                                 class="defaultBtn"
+                                 rendered="#{mainController.userHasRatedMovie()}"
+                                 action="#{reviewController.updateReview}">
+                </h:commandButton>
+                <h:commandButton value="Create"
+                                 id="createBtnId"
+                                 class="defaultBtn"
+                                 rendered="#{!mainController.userHasRatedMovie()}"
+                                 action="#{reviewController.createReview}">
+                </h:commandButton>
+                <h:commandButton value="Sort"
+                                 id="sortBtnId"
+                                 class="defaultBtn"
+                                 rendered="#{mainController.userHasRatedMovie()}"
+                                 action="#{filterController.getAllReviewsSortedByRating}">
+                </h:commandButton>
+            </sec:authenticated>
+            <sec:anonymous>
+                <p>Log in to review and rate the movie</p>
+            </sec:anonymous>
+        </h:form>
+
+        <h3><h:outputLabel prependId="false" rendered="#{mainController.movie.reviewList.size() eq  0}" value="There is no reviews"/></h3>
+    </ui:define>
+
+</ui:composition>
+</html>

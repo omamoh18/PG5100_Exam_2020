@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:sec="http://www.springframework.org/security/tags"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="../layout.xhtml">
+
+    <ui:define name="title">
+        Users
+    </ui:define>
+
+    <ui:define name="content">
+        <h3><h:outputLabel value="USER FIELDS."
+                           rendered="${!empty param['error']}"/></h3>
+
+        <h3><h:outputLabel value="DELETED."
+                           rendered="${!empty param['success']}"/></h3>
+
+        <h:form prependId="false">
+            <h3>Users Registry</h3>
+            <h:dataTable value="#{userController.allUsers}" var="user" border="1" id="userTable" class="userRegistry tableBook">
+                <h:column>
+                    <f:facet name="header">E-mail</f:facet>
+                    <h:outputLabel value="#{user.email}"
+                                   class="userMail"
+                                   id="email"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Name</f:facet>
+                    <h:outputLabel value="#{user.name}"
+                                   class="userName"
+                                   id="name"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Surname</f:facet>
+                    <h:outputLabel value="#{user.surname}"
+                                   class="userSurname"
+                                   id="surname"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Roles</f:facet>
+                    <h:outputLabel value="#{user.roles}"
+                                   class="userEnabled"
+                                   id="roles"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Enabled</f:facet>
+                    <h:outputLabel value="#{user.enabled}"
+                                   class="userEnabled"
+                                   id="enabled"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Enable/Disable</f:facet>
+                    <!--Source for alert dialog: https://stackoverflow.com/questions/19362983/how-to-add-confirmation-dialog-->
+                    <h:commandButton
+                            rendered="#{!user.roles.contains('ROLE_ADMIN') and user.enabled}"
+                            onclick="return confirm('Do you want to disable user?')"
+                            value="Disable"
+                            class="detailBtn"
+                            action="#{userController.changeEnabled(user.email)}"
+                            id="disableBtn"/>
+
+                    <h:commandButton
+                            rendered="#{!user.roles.contains('ROLE_ADMIN') and !user.enabled}"
+                            onclick="return confirm('Do you want to enable user?')"
+                            value="Enable"
+                            class="detailBtn"
+                            action="#{userController.changeEnabled(user.email)}"
+                            id="enableBtn"/>
+
+                </h:column>
+            </h:dataTable>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+</html>
