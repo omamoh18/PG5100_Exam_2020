@@ -1,4 +1,4 @@
-# Exam in PG5100 - Enterprise programming
+# Exam in PG5100 - Enterprise programming (48 Hours)
 
 ## Topic/theme of the exam:
 
